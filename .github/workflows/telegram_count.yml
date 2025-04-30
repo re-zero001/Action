@@ -1,8 +1,6 @@
 name: telegram_count
 
 on:
-  schedule:
-    - cron: "0 16 * * *"
   workflow_dispatch:
   
 jobs:
@@ -36,7 +34,7 @@ jobs:
             else
                 last_id=$id
             fi
-            message_count=$(( id - last_id ))
+            message_count=$(( id - last_id -1 ))
             curl -o /dev/null "$BOTAPI/editMessageText?chat_id=${{ secrets.CHAT_ID }}&message_id=$id&text=昨日消息数：$message_count"
             echo -n $id > last_id
           fi
